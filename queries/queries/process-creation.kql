@@ -1,0 +1,4 @@
+Event
+| where EventID == 4688
+| project TimeGenerated, Computer, RenderedDescription
+| order by TimeGenerated desc
