@@ -280,3 +280,92 @@ Investigate account lockouts, especially when repeated lockouts occur for the sa
 Review the affected account, caller computer, and related failed login events to identify the cause of the lockout.
 
 ---
+
+
+---
+
+# MITRE ATT&CK Mapping
+
+The following mappings provide context for how the monitored Windows security events may relate to MITRE ATT&CK techniques. Some events do not directly represent an ATT&CK technique and require additional investigation and correlation before assigning a technique.
+
+## Failed Login Activity
+
+**Windows Event ID:** 4625
+
+### Relevant MITRE ATT&CK Technique
+
+- **T1110 – Brute Force**
+
+### Detection Context
+
+Multiple failed authentication attempts against the same account or from the same source may indicate password guessing or brute-force activity.
+
+---
+
+## Successful Login Activity
+
+**Windows Event ID:** 4624
+
+### Relevant MITRE ATT&CK Technique
+
+- **T1078 – Valid Accounts**
+
+### Detection Context
+
+A successful login event alone does not indicate malicious activity. However, successful authentication following suspicious failed login activity or from an unusual source may require investigation for potential misuse of valid credentials.
+
+---
+
+## Process Creation Activity
+
+**Windows Event ID:** 4688
+
+### MITRE ATT&CK Context
+
+Process creation events provide visibility into process execution and can support investigation of multiple MITRE ATT&CK techniques depending on the process, command line, parent process, and surrounding activity.
+
+### Detection Context
+
+Suspicious process execution should be investigated and mapped to the relevant ATT&CK technique based on the observed behavior.
+
+---
+
+## User Account Creation Activity
+
+**Windows Event ID:** 4720
+
+### Relevant MITRE ATT&CK Technique
+
+- **T1136 – Create Account**
+
+### Detection Context
+
+Unexpected or unauthorized account creation may indicate an attacker attempting to establish or maintain access within an environment.
+
+---
+
+## Account Lockout Activity
+
+**Windows Event ID:** 4740
+
+### MITRE ATT&CK Context
+
+Account lockout events do not directly map to a single MITRE ATT&CK technique. However, repeated lockouts may be correlated with failed authentication activity that could indicate:
+
+- **T1110 – Brute Force**
+
+### Detection Context
+
+Repeated account lockouts should be correlated with Windows Event ID 4625 events to identify potential password guessing, brute-force attempts, or misconfigured credentials.
+
+---
+
+## MITRE ATT&CK Summary
+
+| Detection | Windows Event ID | Relevant MITRE ATT&CK Technique |
+|---|---:|---|
+| Failed Login | 4625 | T1110 – Brute Force |
+| Successful Login | 4624 | T1078 – Valid Accounts (context-dependent) |
+| Process Creation | 4688 | Context-dependent |
+| User Account Creation | 4720 | T1136 – Create Account |
+| Account Lockout | 4740 | T1110 – Brute Force (when correlated with failed logins) |
