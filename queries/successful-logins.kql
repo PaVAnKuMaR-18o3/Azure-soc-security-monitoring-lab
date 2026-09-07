@@ -1,4 +1,25 @@
+// Failed Login Detection
+// Windows Security Event ID: 4625
+
 Event
-| where EventID == 4624
-| project TimeGenerated, Computer, RenderedDescription
+| where EventID == 4625
+| extend
+    TargetUserName = tostring(EventData.TargetUserName),
+    TargetDomainName = tostring(EventData.TargetDomainName),
+    IpAddress = tostring(EventData.IpAddress),
+    WorkstationName = tostring(EventData.WorkstationName),
+    LogonType = tostring(EventData.LogonType),
+    Status = tostring(EventData.Status),
+    SubStatus = tostring(EventData.SubStatus)
+| project
+    TimeGenerated,
+    Computer,
+    TargetUserName,
+    TargetDomainName,
+    IpAddress,
+    WorkstationName,
+    LogonType,
+    Status,
+    SubStatus,
+    RenderedDescription
 | order by TimeGenerated desc
