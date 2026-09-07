@@ -1,4 +1,21 @@
+// Account Lockout Detection
+// Windows Security Event ID: 4740
+
 Event
 | where EventID == 4740
-| project TimeGenerated, Computer, RenderedDescription
+| extend
+    TargetUserName = tostring(EventData.TargetUserName),
+    TargetDomainName = tostring(EventData.TargetDomainName),
+    SubjectUserName = tostring(EventData.SubjectUserName),
+    SubjectDomainName = tostring(EventData.SubjectDomainName),
+    CallerComputerName = tostring(EventData.CallerComputerName)
+| project
+    TimeGenerated,
+    Computer,
+    TargetUserName,
+    TargetDomainName,
+    SubjectUserName,
+    SubjectDomainName,
+    CallerComputerName,
+    RenderedDescription
 | order by TimeGenerated desc
