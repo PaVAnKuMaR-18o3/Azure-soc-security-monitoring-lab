@@ -1,4 +1,19 @@
+// User Account Creation Detection
+// Windows Security Event ID: 4720
+
 Event
 | where EventID == 4720
-| project TimeGenerated, Computer, RenderedDescription
+| extend
+    TargetUserName = tostring(EventData.TargetUserName),
+    TargetDomainName = tostring(EventData.TargetDomainName),
+    SubjectUserName = tostring(EventData.SubjectUserName),
+    SubjectDomainName = tostring(EventData.SubjectDomainName)
+| project
+    TimeGenerated,
+    Computer,
+    TargetUserName,
+    TargetDomainName,
+    SubjectUserName,
+    SubjectDomainName,
+    RenderedDescription
 | order by TimeGenerated desc
