@@ -1,4 +1,19 @@
+// Process Creation Detection
+// Windows Security Event ID: 4688
+
 Event
 | where EventID == 4688
-| project TimeGenerated, Computer, RenderedDescription
+| extend
+    NewProcessName = tostring(EventData.NewProcessName),
+    ParentProcessName = tostring(EventData.ParentProcessName),
+    CommandLine = tostring(EventData.CommandLine),
+    SubjectUserName = tostring(EventData.SubjectUserName)
+| project
+    TimeGenerated,
+    Computer,
+    NewProcessName,
+    ParentProcessName,
+    CommandLine,
+    SubjectUserName,
+    RenderedDescription
 | order by TimeGenerated desc
