@@ -369,3 +369,95 @@ Repeated account lockouts should be correlated with Windows Event ID 4625 events
 | Process Creation | 4688 | Context-dependent |
 | User Account Creation | 4720 | T1136 – Create Account |
 | Account Lockout | 4740 | T1110 – Brute Force (when correlated with failed logins) |
+
+
+---
+
+# Dashboard and Visualization Documentation
+
+## Monitoring Overview
+
+The SOC monitoring lab uses Azure Log Analytics to investigate Windows security events collected from the monitored virtual machine. KQL queries are used to identify and review authentication activity, process creation, user account changes, and account lockout events.
+
+The primary monitored Windows Security Event IDs are:
+
+| Detection | Windows Event ID | Monitoring Purpose |
+|---|---:|---|
+| Successful Login | 4624 | Monitor successful authentication activity |
+| Failed Login | 4625 | Detect failed authentication attempts |
+| Process Creation | 4688 | Monitor process execution activity |
+| User Account Creation | 4720 | Detect creation of new user accounts |
+| Account Lockout | 4740 | Detect account lockout activity |
+
+---
+
+## Log Analytics Visualization Approach
+
+KQL queries can be used as the foundation for SOC monitoring visualizations within Azure Monitor and Log Analytics.
+
+Useful visualization views include:
+
+- Authentication activity over time.
+- Failed login trends.
+- Successful logins following repeated authentication failures.
+- Process creation activity by computer.
+- New user account creation events.
+- Account lockout activity.
+
+These visualizations help analysts identify unusual patterns and investigate changes in security activity over time.
+
+---
+
+## Recommended SOC Monitoring Views
+
+### Authentication Monitoring
+
+Monitor successful and failed authentication activity to identify:
+
+- Repeated failed login attempts.
+- Authentication failures followed by successful logins.
+- Multiple accounts targeted from the same source.
+- Unusual login activity.
+
+### Process Monitoring
+
+Monitor process creation events to identify:
+
+- Unexpected process execution.
+- Repeated process activity.
+- Unusual activity on monitored systems.
+- Process execution associated with privileged accounts.
+
+### Account Monitoring
+
+Monitor account-related events to identify:
+
+- New user account creation.
+- Unexpected administrative activity.
+- Repeated account lockouts.
+- Multiple accounts affected within a short period.
+
+---
+
+## SOC Investigation Workflow
+
+1. Review the detection alert or suspicious event.
+2. Identify the affected user account and computer.
+3. Review the event timestamp and related activity.
+4. Investigate relevant fields such as source IP address, workstation, process details, or account information.
+5. Correlate the event with related Windows Security Events.
+6. Determine whether the activity is expected or suspicious.
+7. Document findings and escalate suspicious activity when required.
+
+---
+
+## Future Improvements
+
+Future versions of this lab could include:
+
+- Azure Monitor Workbooks for interactive visualizations.
+- Microsoft Sentinel analytics rules.
+- Automated alert generation.
+- Incident creation and investigation workflows.
+- Additional Windows Security Event monitoring.
+- Correlation rules across multiple event types.
