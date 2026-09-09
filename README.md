@@ -186,7 +186,9 @@ the authentication failed.
 
 ### Screenshot
 
-![Failed Login Investigation](screenshots/Failed%20login%20inv.png)
+### Screenshot
+
+![Failed Login Investigation](screenshots/failed-login-investigation.png)
 
 ------------------------------------------------------------------------
 
